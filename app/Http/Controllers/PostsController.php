@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePost;
+use App\Models\BlogPost;
 use Illuminate\Http\Request;
 
-class PostController extends Controller
+class PostsController extends Controller
 {/**
  * Display a listing of the resource.
  *
