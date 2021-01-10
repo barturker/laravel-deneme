@@ -5,6 +5,6 @@
     <form class="d-inline" action="{{ route('posts.destroy', ['post' => $post->id]) }}" method="POST">
         @csrf
         @method('DELETE')
-        <input type="submit" value="Delete!" class="btn btn-primary">
+        <input type="submit" value="Delete!" class="btn btn-danger">
     </form>
 </div>
