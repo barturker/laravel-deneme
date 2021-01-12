@@ -6,7 +6,7 @@ use App\Http\Requests\StorePost;
 use App\Models\BlogPost;
 use Illuminate\Http\Request;
 
-class PostsController extends Controller
+class PostController extends Controller
 {/**
  * Display a listing of the resource.
  *
@@ -14,7 +14,7 @@ class PostsController extends Controller
  */
     public function index()
     {
-        return view('posts.index', ['posts' => BlogPost::all()]);
+        return view('posts.index', ['posts' => BlogPost::withCount('comments')->get()]);
     }
 
     /**
@@ -53,7 +53,7 @@ class PostsController extends Controller
     {
         // abort_if(!isset($this->posts[$id]), 404);
 
-        return view('posts.show', ['post' => BlogPost::findOrFail($id)]);
+        return view('posts.show', ['post' => BlogPost::with('comments')->findOrFail($id)]);
     }
 
     /**

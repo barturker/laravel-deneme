@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PostsController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,7 +49,7 @@ $posts = [
     ]
 ];
 
-Route::resource('posts', PostsController::class);
+Route::resource('posts', PostController::class);
 // ->only(['index', 'show', 'create', 'store', 'edit', 'update']);
 
 // Route::get('/posts', function () use ($posts) {
