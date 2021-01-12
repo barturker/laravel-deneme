@@ -17,8 +17,10 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', [HomeController::class, 'home'])
     ->name('home.index');
+//    ->middleware('auth');
 Route::get('/contact', [HomeController::class, 'contact'])
     ->name('home.contact');
+//    ->middleware('auth');
 Route::resource('posts', PostController::class);
 
 Auth::routes();

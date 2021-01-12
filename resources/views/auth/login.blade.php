@@ -4,18 +4,8 @@
 @section('content')
 
 
-    <form method="POST" action="{{route('register')}}" enctype="multipart/form-data">
+    <form method="POST" action="{{route('login')}}" enctype="multipart/form-data">
         @csrf
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" value="{{old('name')}}" name="name" class="form-control{{ $errors->has('name') ? 'is-invalid' : ''}}" id="name" required aria-describedby="" placeholder="Name">
-            @if($errors->has('name'))
-                <span class="invalid-feedback">
-                    <strong>{{$errors->first('name')}}</strong>
-                </span>
-
-            @endif
-        </div>
         <div class="form-group">
             <label for="email">Email</label>
             <input type="text" name="email" value="{{old('email')}}" required class="form-control {{ $errors->has('email') ? 'is-invalid' : ''}}" id="email" aria-describedby="" placeholder="Email Address">
@@ -36,11 +26,15 @@
 
             @endif
         </div>
+
         <div class="form-group">
-            <label for="retyped_password">Retyped Password</label>
-            <input type="password" name="password_confirmation" class="form-control" id="retyped_password" placeholder="Re-type Password">
+            <div class="form-check">
+                <input type="checkbox" id="remember" value="{{old('remember') ? 'checked' : ''}}" name="remember" class="form-check-input">
+                <label for="remember" class="form-check-label">Remember Me</label>
+            </div>
+
         </div>
-        <button type="submit" class="btn btn-primary btn-block">Register</button>
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
     </form>
 
 

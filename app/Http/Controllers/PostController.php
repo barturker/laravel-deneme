@@ -12,6 +12,13 @@ class PostController extends Controller
  *
  * @return \Illuminate\Http\Response
  */
+    public function __construct()
+    {
+        $this->middleware('auth')
+            ->only(['create', 'store', 'edit', 'destroy', 'update']);
+    }
+
+
     public function index()
     {
         return view('posts.index', ['posts' => BlogPost::withCount('comments')->get()]);
