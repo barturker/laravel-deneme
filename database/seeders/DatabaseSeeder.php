@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
 
         User::factory(10)->create();
         BlogPost::factory(10)->create();
-        Comment::factory(10)->create();
+        Comment::factory(30)->create();
 
 //        BlogPost::factory(10)->create()->each(function($blogpost){
 //            $blogpost->comments()->save(Comment::factory()->make());

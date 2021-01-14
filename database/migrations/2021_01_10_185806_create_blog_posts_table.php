@@ -19,6 +19,7 @@ class CreateBlogPostsTable extends Migration
             $table->string('title');
             $table->text('content');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
