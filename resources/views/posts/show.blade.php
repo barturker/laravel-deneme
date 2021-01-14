@@ -15,11 +15,11 @@
 <h4>Comments:</h4>
 
     @forelse($post->comments as $comment)
-      <ol>
+      <ul>
           <li>
               <p>{{$comment->content}} <br> Added {{$comment->created_at->diffForHumans()}}</p>
           </li>
-      </ol>
+      </ul>
     @empty
         <p>No Comments!</p>
     @endforelse
