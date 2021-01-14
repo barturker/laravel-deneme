@@ -1,5 +1,16 @@
-<h3><a href="{{ route('posts.show', ['post' => $post->id]) }}">{{ $post->title }}</a></h3>
 
+<p>
+
+</p>
+
+<h3>
+    @if($post->trashed())
+<del>
+    @endif
+    <a class="{{$post->trashed() ? 'text-muted' : ""}}" href="{{ route('posts.show', ['post' => $post->id]) }}">{{ $post->title }}</a></h3>
+@if($post->trashed())
+    </del>
+        @endif
 <p>
     By: {{$post->user->name}}
     <br>
@@ -19,6 +30,7 @@
 {{--        @cannot('delete', $post)--}}
 {{--            <p>BU POSTU SİLEMEZSİN</p>--}}
 {{--        @endcannot--}}
+        @if(!$post->trashed())
     @can('delete', $post)
     <form class="d-inline" action="{{ route('posts.destroy', ['post' => $post->id]) }}" method="POST">
         @csrf
@@ -26,4 +38,5 @@
         <input type="submit" value="Delete!" class="btn btn-danger">
     </form>
     @endcan
+    @endif
 </div>

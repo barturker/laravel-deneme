@@ -26,6 +26,7 @@ class BlogPostFactory extends Factory
             'user_id'=>User::all()->random()->id,
             'title' => $this->faker->company,
             'content' => $this->faker->paragraphs(rand(10,15), true),
+            'created_at' =>$this->faker->dateTimeBetween($startDate = '-3 months', $endDate = 'now'),
         ];
     }
 }

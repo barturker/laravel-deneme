@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePost;
 use App\Models\BlogPost;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -22,7 +23,13 @@ class PostController extends Controller
 
     public function index()
     {
-        return view('posts.index', ['posts' => BlogPost::withCount('comments')->get()]);
+
+        return view('posts.index',
+            ['posts' => BlogPost::latest()->withCount('comments')->get(),
+              'mostCommented'=> BlogPost::mostCommented()->take(5)->get(),
+                'mostActive'=>User::MostBlogPosts()->take(5)->get(),
+                'mostActiveLastMonth' => User::MostBlogPostsLastMonths()->withCount('blogPost')->take(5)->get(),
+        ]);
     }
 
     /**
@@ -46,6 +53,7 @@ class PostController extends Controller
     {
 
         $validated = $request->validated();
+        $validated['user_id'] = $request->user()->id;
         $post = BlogPost::create($validated);
 
         $request->session()->flash('status', 'The blog post was created!');
@@ -63,8 +71,15 @@ class PostController extends Controller
     {
         // abort_if(!isset($this->posts[$id]), 404);
 
-        return view('posts.show', ['post' => BlogPost::with('comments')->findOrFail($id)]);
+        return view('posts.show', [
+            'post' => BlogPost::with('comments')->findOrFail($id)]);
     }
+
+    //  local scope call via query inside method
+        //return view('posts.show', [
+        //'post' => BlogPost::with(['comments'=>function($query){
+        //    return $query->latest();
+        //}])->findOrFail($id)]);
 
     /**
      * Show the form for editing the specified resource.

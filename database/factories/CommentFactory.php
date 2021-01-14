@@ -25,6 +25,7 @@ class CommentFactory extends Factory
         return [
             'blog_post_id' => BlogPost::all()->random()->id,
             'content' => $this->faker->text,
+            'created_at' =>$this->faker->dateTimeBetween($startDate = '-3 months', $endDate = 'now'),
         ];
     }
 }
