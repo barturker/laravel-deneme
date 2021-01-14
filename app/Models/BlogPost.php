@@ -20,6 +20,10 @@ class BlogPost extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
     //deleting post with associated comments
     public static function boot(){
         parent::boot();

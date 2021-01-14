@@ -13,6 +13,9 @@ class HomeController extends Controller
         ->only(['contact']);
     }
 
+    public function secret(){
+         return view('secret');
+    }
 
     public function home()
     {

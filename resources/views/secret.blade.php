@@ -5,9 +5,6 @@
 @section('content')
     <h1>Contact page</h1>
 
-    @can('home.secret')
-        <a href="{{route('secret')}}"> <p>go special link</p></a>
-
-    @endcan
+ <p>this is secret laravel test</p>
 
 @endsection
