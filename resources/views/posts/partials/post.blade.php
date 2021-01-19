@@ -20,7 +20,7 @@
 
 
 
-
+<x-tags :tags="$post->tags"></x-tags>
 
 
 
