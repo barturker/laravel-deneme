@@ -38,9 +38,19 @@ class BlogPost extends Model
         return $query->orderBy(static::CREATED_AT, 'DESC');
     }
 
+
     public function scopeMostCommented(Builder $query){
         return $query->withCount('comments')->orderBy('comments_count', 'DESC');
     }
+
+    public function scopeLatestWithRelations(Builder $query){
+        return $query->latest()
+            ->withCount('comments')
+            ->with('user')
+            ->with('tags');
+    }
+
+
     //deleting post with associated comments
     public static function boot(){
 
@@ -50,11 +60,11 @@ class BlogPost extends Model
 //        static::addGlobalScope(new LatestScope);
 
         static::deleting(function (BlogPost $blogPost){
-            $blogPost->comments()->delete();
+            Cache::tags(['blog-post'])->forget("blog-post-{$blogPost->id}");
         });
 
-        static::updating(function (BlogPost $blogPost){
-            Cache::forget("blog-post-{$blogPost}");
+        static::updating(function (BlogPost $blogPost) {
+            Cache::forget("blog-post-{$blogPost->id}");
         });
 
 
