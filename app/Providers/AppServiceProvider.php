@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Http\ViewComposers\ActivityComposer;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Schema::defaultStringLength(191);
         Blade::Component('components.badge', 'badge');
         Blade::Component('components.updated', 'updated');
         Blade::Component('components.card', 'card');
