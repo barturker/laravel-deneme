@@ -15,7 +15,7 @@
 </h3>
 
 
-<x-updated :name="$post->user->name" :date="$post->created_at">
+<x-updated :name="$post->user->name" :date="$post->created_at" :userId="$post->user->id">
 </x-updated>
 
 

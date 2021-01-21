@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use App\Policies\BlogPostPolicy;
@@ -17,6 +19,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
 //         'App\Models\Model' => 'App\Policies\ModelPolicy',
         BlogPost::class => BlogPostPolicy::class,
+        User::class => UserPolicy::class,
 
 
     ];
@@ -48,9 +51,9 @@ class AuthServiceProvider extends ServiceProvider
 //        Gate::resource('posts', BlogPostPolicy::class);
 
         Gate::before(function ($user, $ability){
-           if ($user->is_admin && in_array($ability,['update', 'delete'])){
-               return true;
-           }
+//           if ($user->is_admin && in_array($ability,['update', 'delete'])){
+//               return true;
+//           }
         });
 
         //
