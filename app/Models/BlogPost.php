@@ -20,6 +20,9 @@ class BlogPost extends Model
     use SoftDeletes;
 
 
+  public function image(){
+    return $this->hasOne(Image::class);
+  }
 
     public function comments()
     {
@@ -60,6 +63,7 @@ class BlogPost extends Model
 //        static::addGlobalScope(new LatestScope);
 
         static::deleting(function (BlogPost $blogPost){
+          $blogPost->comments()->delete();
             Cache::tags(['blog-post'])->forget("blog-post-{$blogPost->id}");
         });
 
