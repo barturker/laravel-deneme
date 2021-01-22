@@ -16,11 +16,11 @@ class Comment extends Model
 
 
     protected $fillable = ['user_id','content'];
-    public function blogPost()
-    {
-        return $this->belongsTo(BlogPost::class);
 
+    public function commentable(){
+      return $this->morphTo();
     }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -36,8 +36,11 @@ class Comment extends Model
         parent::boot();
 
         static::creating(function (Comment $comment) {
-            Cache::tags(['blog-post'])->forget("blog-post-{$comment->blog_post_id}");
+
+          if ($comment->commentable_type===BlogPost::class){
+            Cache::tags(['blog-post'])->forget("blog-post-{$comment->commentable_id}");
             Cache::tags(['blog-post'])->forget('mostCommented');
+          }
         });
 
         // static::addGlobalScope(new LatestScope);
