@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Scopes\DeletedAdminScope;
 use App\Scopes\LatestScope;
+use App\Traits\Taggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +18,7 @@ class BlogPost extends Model
 
     protected $fillable = ['user_id','title', 'content'];
 
-    use SoftDeletes;
+    use SoftDeletes, Taggable;
 
 
   public function image(){
@@ -33,9 +34,7 @@ class BlogPost extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function tags(){
-        return $this->belongsToMany(Tag::class)->withTimestamps();
-    }
+
 
     public function scopeLatest(Builder $query){
         return $query->orderBy(static::CREATED_AT, 'DESC');

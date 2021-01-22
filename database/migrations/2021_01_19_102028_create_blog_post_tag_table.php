@@ -13,10 +13,10 @@ class CreateBlogPostTagTable extends Migration
      */
     public function up()
     {
-        Schema::create('blog_post_tag', function (Blueprint $table) {
+        Schema::create('taggables', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('blog_post_id')->constrained()->onDelete('cascade');
             $table->foreignId('tag_id')->constrained()->onDelete('cascade');
+            $table->morphs('taggable');
             $table->timestamps();
         });
     }
