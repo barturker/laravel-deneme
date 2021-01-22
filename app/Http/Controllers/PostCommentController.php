@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreComment;
+use App\Jobs\NotifyUsersPostWasCommented;
+use App\Jobs\ThrottledMail;
 use App\Mail\CommentPosted;
 use App\Mail\CommentPostedMarkdown;
 use App\Models\BlogPost;
@@ -23,9 +25,16 @@ class PostCommentController extends Controller
             'content'=>$request->input('content'),
             'user_id'=>$request->user()->id
         ]);
-        Mail::to($post->user)->send(
-          new CommentPostedMarkdown($comment)
-        );
+
+//        Mail::to($post->user)->queue(
+//
+//        );
+
+        ThrottledMail::dispatch(new CommentPostedMarkdown($comment), $post->user)
+        ->onQueue('high');
+
+        NotifyUsersPostWasCommented::dispatch($comment)
+        ->onQueue('low');
 
         return redirect()->back()->withStatus('Comment was created!');
     }
