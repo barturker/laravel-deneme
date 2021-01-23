@@ -61,20 +61,5 @@ class BlogPost extends Model
 
 //        static::addGlobalScope(new LatestScope);
 
-        static::deleting(function (BlogPost $blogPost){
-          $blogPost->comments()->delete();
-            Cache::tags(['blog-post'])->forget("blog-post-{$blogPost->id}");
-        });
-
-        static::updating(function (BlogPost $blogPost) {
-            Cache::forget("blog-post-{$blogPost->id}");
-        });
-
-
-        static::restoring(function (BlogPost $blogPost){
-            $blogPost->comments()->restore();
-        });
-
-
 }
 }
