@@ -92,7 +92,11 @@ class UserController extends Controller
           );
         }
       }
-      return back()->withStatus('Profile Image Updated');
+      $user->locale = $request->get('locale');
+      $user->save();
+
+
+      return redirect()->back()->withStatus('Profile Updated');
 
         //
     }

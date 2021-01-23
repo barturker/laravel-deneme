@@ -24,11 +24,9 @@
 
 
 
-@if($post->comments_count)
-    <p>{{$post->comments_count}} Comments</p>
-@else
-    <p>No Comments!</p>
-@endif
+
+
+{{trans_choice('messages.comments', $post->comments_count)}}
 
 
 <div class="mb-3">
