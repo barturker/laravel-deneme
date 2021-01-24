@@ -3,7 +3,9 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class Handler extends ExceptionHandler
 {
@@ -33,8 +35,18 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
-            //
-        });
+      $this->renderable(function(NotFoundHttpException $exception, $request) {
+
+        if($request->expectsJson()) {
+          return response()->json([
+            'message' => 'yanlış yere geldin aq'
+          ], 404);
+          // return Route::respondWithRoute('api.fallback');
+        }
+        if ($request->expectsJson() && $exception instanceof AuthorizationException){
+          return response()->json(['message' => $exception->getMessage()], 403);
+        }
+
+      });
     }
 }
